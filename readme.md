@@ -16,11 +16,18 @@ Bu degisiklikleri stage'e attiktan sonra (bkz. git add komutu) bu sefer tum stag
 ### git init
 Bulunulan klasorde git yapisini kurar ve git degisiklikleri takibe baslar.
 
+### git --version
+Yuklenmis son git versiyonunu verir
+
 ### git branch
 git icindeki branchlardan o an uzerinde calisilanini gosterir
 
 ### git branch <branch_adi>
 Bu komutla yeni bir branch yaratilir. Ancak uzerinde bulunulan branch'da kalmaya devam edilir.
+
+### git switch <branch_name> 
+Calisma branch olarak belirtilen branch uzerine gecer.
+Eger bu komut -c veya -C parametresiyle kullanilirsa , verilen isimle yeni bir branch olusturup onun uzerine gecer.
 
 ### git status
 Hangi brach uzerinde olundugu, degisiklik olusan dosyalar, bu dosyalarin degisikliklerinin stage uzerine alinip alinmadigi gorulur.
@@ -40,6 +47,15 @@ Baska sebeplerle de bu duruma dusulebilir.
 
 ### git branch -d <branch_name> 
 Eger branch baska bir branch'a merge edildiyse branchi siler. Merge yoksa dilmez. Bu islemi merge yoksa bile force etmek icin -d yerine -D kullanilir. Bu durumda branch her halikarda silinir. Bu kullanimda birden fazla branch isimleri bosluklarla eklenerek yazilirsa hepsi birden silinir.
+
+### git add <file_name> 
+bir dosyadaki degisiklikleri stage alanina ekler. Eger dosya adi yerine . koyulursa gitin takip ettigi tum dosyalardaki degisiklikleri stage alanina ekler.
+
+### git commit -m "<commit_message>"
+Yapilmis degisiklikleri yeni commit olusturup icine ekler ve buna bir mesaj ekler.
+
+### git ls-files 
+Stage alanina eklenmis tum dosyalari listeler (git add ile eklenmis)
 
 
 
