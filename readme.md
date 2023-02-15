@@ -90,4 +90,4 @@ Son committen sonra yapilan tum degisiklikleri hafizada bir yere kaydedip (indek
 Yapilmis stash leri indeks nolariyla ve degisen dosyalarin ismiyle birlikte listeler
 
 ### git stash apply <stash_index_no>
-Hafizadaki stashlerden indeks nosu verileni calisma ortamina geri yukler. Eger indeks no girilmemis ise son kaydedilen stashi geri yukler
+Hafizadaki stashlerden indeks nosu verileni calisma ortamina geri yukler. Eger indeks no girilmemis ise son kaydedilen stashi calisma ortamina geri yukler.
