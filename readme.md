@@ -84,10 +84,22 @@ Hepsi stage alanindaki tum degisiklikleri kaldirir. (add in tersi)
 Eger default olarak --soft flag gecerlidir. `git reset --soft HEAD~1` seklinde kullanilirsa commiti siler ama degisiklikleri stage alaninda birakir --hard kullanilirsa commiti siler ve degisiklikleri de stage den kaldirir.
 
 ### git stash
-Son committen sonra yapilan tum degisiklikleri hafizada bir yere kaydedip (indeksli bir nesnenin icinde) son commit durumune geri doner.
+Son committen sonra yapilan ve stage e atilmamis (add ile stage e eklenmemis) tum degisiklikleri hafizada bir yere kaydedip (indeksli bir nesnenin icinde) son commit durumuna geri doner.
 
 ### git stash list
-Yapilmis stash leri indeks nolariyla ve degisen dosyalarin ismiyle birlikte listeler
+Yapilmis stash leri indeks nolariyla ve degisen dosyalarin ismiyle birlikte listeler. Indeksler tersinedir. Yani son eklenen stash surekli 0. indekstir. Yeni stash eklendikce indeksler kayar.
 
 ### git stash apply <stash_index_no>
 Hafizadaki stashlerden indeks nosu verileni calisma ortamina geri yukler. Eger indeks no girilmemis ise son kaydedilen stashi calisma ortamina geri yukler.
+
+### git stash push -m "<stash_message>"
+Bu komutla stashlere not ekleyebiliriz (commit gibi) boylece `git stash list` komutunda stash icin aciklayici bir not gorunur, secilmesi kolay olur.
+
+### git stash pop <stash_index_no>
+Bu komutla stash listesindeki secilen stash calisma ortamina eklenir ve stash listesinden kaldirilir.
+
+### git stash drop <stash_index_no>
+Indeks nosu verilen stash listeden kaldirilir/silinir.
+
+### stash clear
+Tum stash verisini siler.
