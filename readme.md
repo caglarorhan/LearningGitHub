@@ -101,5 +101,16 @@ Bu komutla stash listesindeki secilen stash calisma ortamina eklenir ve stash li
 ### git stash drop <stash_index_no>
 Indeks nosu verilen stash listeden kaldirilir/silinir.
 
-### stash clear
+### git stash clear
 Tum stash verisini siler.
+
+### git reflog
+Silinmis degisiklikleri (staged + commit) goruntulenir, hafizada saklanan bu degisiklikler birer hash no ile HEAD olarak temsil edilir. 
+Boylece gidilmek istenen HEAD uzerine hash ile `git reset --hard <hash_code>` seklinde gidilebilir. 
+
+### git reset --hard <hash_code>
+`git reflog` ile goruntulenen listeden alinacak hash_no ile kullanilip ilgili HEAD uzerine gidilebilir. Boylece o commit geri getirilir.
+
+NOT: Eger bir branch silindiyse ve `git reflog` ile gelen listede gidilmek istenen commit silinmis bir branch uzerindeyse `git checkout <hash_no>` ile bu secilen commit uzerine gidilirse `detached HEAD state` olusur. Bu durumdan cikmak icin: 
+* Yeni bir branch olusturulup ona gecilir. `git switch -c <new_branch_name>` 
+* Sonra istenirse master branch uzerine gecilip bu yeni branch merge edilebilir.
