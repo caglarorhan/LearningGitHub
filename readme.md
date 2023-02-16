@@ -1,5 +1,9 @@
 # **My Git Notes**
 
+**Master Branch**: uzerinde calisilan ana branch
+
+**Feature Branch** : ana branchdan dallanmis, yeni bir ozelligin gelistirildigi yan branch
+
 Git yapisi dosyalar ve dosyalardaki degisiklikleri takip etmek uzerine kuruludur. Boylece versiyonlama ve versiyonlar arasinda seyahat cok kolay hale gelmektedir.
 
 ### branch, commit, stage
@@ -69,6 +73,15 @@ Ismi verilen dosyayi siler
 ### git checkout (--) .
 Stage uzerine alinmamis tum degisiklikleri siler (geri alir)
 
+### git checkout <branch_name>
+Uzerinde calisilan branch'tan ismi verilen brancha gecer.
+`git switch <branch_name>` ile ayni isi yapar
+
+### git checkout -b <new_branch_name>
+Verilen isimle yeni bir branch olusturur ve onun uzerine gecer
+`git switch -c <new_branch_name>` ile ayni isi yapar.
+
+
 ### git restore <file_name> veya .
 git checkout -- ile ayni isi yapar. Stage'e alinmamis degisiklikleri siler/geri alir.
 
@@ -127,11 +140,73 @@ NOT: Eger bir branch silindiyse ve `git reflog` ile gelen listede gidilmek isten
 
 ### Fast-Forward Merge
 Eger master branch da dallanma sonrasi hic yeni commit yoksa feature branch HEAD ine ait tum degisiklikler bu brancha tasinir. Ancak yeni commit yaratilmaz. (`--squash` flag eklenirse yaratilir. bkz asagisi) 
+
 Kullanimi `git merge <feature_branch_name>` seklindedir.
+
 Eger master branch'da (veya calisilan ve uzerine merge yapilan brancha) merge sonraki duruma donmek istersek `git reset --hard HEAD~<head_index_no>` ile donebiliriz. Hangi HEAD e donmek istedigimizi git log ile listeletip oradan secebiliriz. Bu geri alma isleminden feature branch etkilenmez. Uzerindeki commitler aynen kalir.
+
 Eger `--squash` komutu kullanilirsa featured branch degisikliklerinin tamami tek bir HEAD haline getirilip master branch (icine merge edilen branch) uzerine eklenir.
-Kullanimi `git merge --squash <feature_branch_name>` seklidnedir.
+
+Kullanimi `git merge --squash <feature_branch_name>` seklindedir.
 
 
 
 ### Recursive Merge
+Eger master branchta yeni feature branch uretildikten sonra degisiklikler yapilip uzerine de commit yapildiysa o zaman default olarak merge non forward merge olur ve otomatik recursive merge olarak tanimlanir.
+
+Recursive merge yapildiginda master branch da hali hazirda commitler vardir ve feature branch commitleri ardina eklenir. Burada commitler degisiklik siralarina gore mastera eklenir. Yani feature commitleri ile master commitleri siralarina gore ardisik dizilirler. En sona ise merge edilen feature branch'in son hali commit olarak eklenir (HEAD).
+
+Eger bu sekilde yum commitlerin recursive olarak eklenmeini istemiyorsak `--squash` kullanabiliriz.
+
+Boylece tum feature degisiklikleri masterin stageine eklenir ama commitlerde sadece masterin kendi komitleri gorunur. Bu stage dekiler de commitlenerek mastera eklenebilir.
+
+### git merge --abort
+merge sirasinda conflict varsa merge isleminden tamamen vazgecmek icin kullanilir. Conflict secenekleri degerlendirelerek merge islemine devam de edilebilir.
+
+### git rebase <feature_branch>
+Bu komutla master branch uzerinde feature branch ayrildiktan sonra yapilmis olan commitler de feature branch uzerine (kendi commitlerinden onceye) eklenir. Master branch ustundeki son commit base commit olur (her iki branch icin de).
+Daha sonra master a gecilip feature uzerindeki tum commitler merge edilir (fast-forward merge).
+* rebase commitleri tasimaz, yeni commitler yaratir
+* kendi reponuz disinda commitleri rebase yapmayin.
+
+Kullanimi:
+Eger feature branch'in master'dan dallandigi noktadan sonra master uzerinde yapilan degisiklik commitlerini de feature uzerine almak istersek (geride kalmis olsalarda) 
+feature branch uzerinde calisirken
+
+`git rebase master` dedigimizde master uzerinde branch ayrilmasi sonrasi yapilmis yeni commitler feature branch uzerine ve kendi yeni commitlerinin oncesine (base) gelir. Boylece feature branch re-base edilmis olur.
+
+**Commit hash idleri degistigi icin (yeniden yaratildiklarindan) branchlarin tum historysi degisir.** Takim calismalarinda yapilmasi onerilmez. Sadece lokal repoda yapilabilir.
+
+Feature branch  rebase edildikten sonra master brancha gecilip feature branch onun uzerine merge edilir. 
+Hangi durumda kullanilir. Feature uzerinde gelistirilen ozellikler master daki yeni gelistirmelere dayaniyorsa/ihtiyac duyuyorsa bu yapilabilir.
+
+### git diff 
+iki branch arasindaki farkliliklari gosterir (conflicts) .
+Conflict giderilince merge edilebilir.
+
+
+### git cherry-pick
+Bir branchtaki tek bir commiti baska bir brancha merge etmek icin kullanilir. Bu brancha merge edilen commitin idsi degisir (yeni commit yaratildigindan).
+
+**Ornegin:** Master branch'dan bir feature branch ayirdik ve gelistirme yaptik ve commitler yaptik. Sonra feature icinde olmayan ama temel bir duzeltme yapmak zorunda kaldik (masterda eksik kalmasin diye) feature uzerinde duzeltmeyi yapip commit yaptigimizda (duzeltmeye ozel commit) bu commit'in hash idsini aliriz.
+
+Master uzerine geceriz. `git cherry-pick <commit_id>` komustu ile feature uzerindeki duzeltmeyi iceren commiti master uzerine yeni id ile cekeriz. Bu commit masterin yeni HEAD i olur.
+
+## TAG
+* Lightweight (temporary) tags: versiyon gibi basit bilgileri icerirler
+* Annotated tags: son commitlere verilen full object (veri tasir) taglerdir
+
+### git tag <tag_name> <commit_hash_id>
+Tum tagleri gormek icin `git tag` komutunu kullaniyoruz. Belirli bir commite tag vermek icin commitin hash idsini kullanarak `git tag <tag_name> <commit_hash_id>` seklinde tag kaydediyoruz.
+
+tagler uzerinden commitlere gecmek icin (detached head state olusur) `git checkout <tag_name>` seklinde kullanimi da vardir.
+
+Tag silmek icin `git tag -d <tag_name>` komutu kullanilir.
+
+### git show <tag_name>
+taglenmis bir commitin bilgilerine tag uzerinden ulasabilmek icin kullanilan komuttur.
+
+
+### git tag -a <tag_name> -m "<tag_verisi>"
+Annotated tag denir. Son commite eklenir. Tag verisi bir aciklama veya eposta, author gibi bilgilerden olusan metindir. `git show <tag_name>` komutu ile goruntulenebilirler. Bu taglerin son commite eklenmesi ve veri tasimasi disinda tum ozellikleri temporary tagler ile aynidir.
+
