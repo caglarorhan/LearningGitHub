@@ -114,3 +114,24 @@ Boylece gidilmek istenen HEAD uzerine hash ile `git reset --hard <hash_code>` se
 NOT: Eger bir branch silindiyse ve `git reflog` ile gelen listede gidilmek istenen commit silinmis bir branch uzerindeyse `git checkout <hash_no>` ile bu secilen commit uzerine gidilirse `detached HEAD state` olusur. Bu durumdan cikmak icin: 
 * Yeni bir branch olusturulup ona gecilir. `git switch -c <new_branch_name>` 
 * Sonra istenirse master branch uzerine gecilip bu yeni branch merge edilebilir.
+
+ 
+## MERGE
+
+* Fast-Forward Merge
+* Non Fast-Forward Merge
+  * Recursive
+  * Ours
+  * Octopus
+  * Subtree
+
+### Fast-Forward Merge
+Eger master branch da dallanma sonrasi hic yeni commit yoksa feature branch HEAD ine ait tum degisiklikler bu brancha tasinir. Ancak yeni commit yaratilmaz. (`--squash` flag eklenirse yaratilir. bkz asagisi) 
+Kullanimi `git merge <feature_branch_name>` seklindedir.
+Eger master branch'da (veya calisilan ve uzerine merge yapilan brancha) merge sonraki duruma donmek istersek `git reset --hard HEAD~<head_index_no>` ile donebiliriz. Hangi HEAD e donmek istedigimizi git log ile listeletip oradan secebiliriz. Bu geri alma isleminden feature branch etkilenmez. Uzerindeki commitler aynen kalir.
+Eger `--squash` komutu kullanilirsa featured branch degisikliklerinin tamami tek bir HEAD haline getirilip master branch (icine merge edilen branch) uzerine eklenir.
+Kullanimi `git merge --squash <feature_branch_name>` seklidnedir.
+
+
+
+### Recursive Merge
