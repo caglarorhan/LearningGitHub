@@ -210,3 +210,30 @@ taglenmis bir commitin bilgilerine tag uzerinden ulasabilmek icin kullanilan kom
 ### git tag -a <tag_name> -m "<tag_verisi>"
 Annotated tag denir. Son commite eklenir. Tag verisi bir aciklama veya eposta, author gibi bilgilerden olusan metindir. `git show <tag_name>` komutu ile goruntulenebilirler. Bu taglerin son commite eklenmesi ve veri tasimasi disinda tum ozellikleri temporary tagler ile aynidir.
 
+## GITHUB
+
+### git remote add origin "<url>"
+
+remote add : uzaktaki bir baglantiyi eklemek demektir
+
+origin: baglantiya verdigimiz isim/nick/alias (bize kalmis, ama gelnek origin seklinde)
+
+url: originin temsil edecegi gercek ve tekil url
+
+### git branch -M main
+
+ana branch olarak hangi isimde bir branch kullanacagimizi belirtiriz. Genellikle main veya master kullanilir.
+
+
+### git push -u origin main
+push: Local degisiklikleri remote repository e atar
+
+-u: upstream
+
+origin main: remote repositorye (kisa adi origin) main branch'ina atar.
+
+Eger default upstream branchdisindaki bir brancha push edilecekse (default olarak) o zaman upstream branch set edilmeli. Su an default main branch olarak gelir. Ornegin sadece
+`git push` yazilirsa default upstream hangisiyse ona gonderir.
+
+### git pull
+Remote veriyi local repoya ceker.
