@@ -26,6 +26,35 @@ Yuklenmis son git versiyonunu verir
 ### git branch
 git icindeki branchlardan o an uzerinde calisilanini gosterir
 
+### git branch -a
+git push ve git pull islemlerinde origin uzerindeki (remote) master branch ile etkilesecek ve adina **Remote Tracking Branch** denilen bir ara branch olusur. -a parametresi ile remote uzerinde olusan bu tracking branch da listelenir.
+
+Ornegin `git push` komutunda olusan islemler soyledir: 
+ * `git push origin master` komutu verilir
+ * localdeki master branchin bir kopyasi remote uzerinde olusturulan `remotes/origin/master` remote tracking branchina aktarilir.
+ * Bu remote tracking branch ise remote uzerinde yaratilan `master` branchina kopyalanir.
+
+Ornegin `git pull` komutunda olusan islemler soyledir:
+* `git pull origin master` verilir
+* remote uzerindeki master branch uzerinde `git fetch` calisir (otomatik)
+* remote uzerindeki master branch bilgisi, remote da olusturulan `remotes/origin/master` remote tracking branch uzerine kopyalanir
+* `git merge` komutu otomatik calisir 
+* `remotes/origin/master` remote tracking branch uzerinden lokaldeki master branch uzerine kopyalanir.
+
+**NOT:** `git fetch remote` remote brachlari locale transfer eder. Ancak pull komutu gibi merge etmez. Pull ve merge komutlarinin ise branch ile birlikte kullanilmasi gerekir. `git pull origin master` gibi.
+
+### git branch -r
+Sadece remote branchlar listlenir
+
+### git branch -vv
+local branchlar, en son commitleri ve tracking edilenlerin remote uzerinde eslestikleri branchlar listelenir 
+
+## git branch --track <branch_name> origin/<branch_name>
+remote ile ayni isimde local tracking branch olusturmaya yarar. Ayni isimde olmalari zorunludur.
+
+### git ls-remote
+localde olmayan ama github uzerinde push edilmis veya remote uzerinde olusturulmus branchlari gormek istersek bu komutu kullaniriz. Bu komut push edilmis olsun veya remote uzerinde manuel olusturulmus olsun tum remote branchlari listeler.
+
 ### git branch <branch_adi>
 Bu komutla yeni bir branch yaratilir. Ancak uzerinde bulunulan branch'da kalmaya devam edilir.
 
@@ -54,6 +83,7 @@ Baska sebeplerle de bu duruma dusulebilir.
 
 ### git branch -d <branch_name> 
 Eger branch baska bir branch'a merge edildiyse branchi siler. Merge yoksa dilmez. Bu islemi merge yoksa bile force etmek icin **-d** yerine **-D** kullanilir. Bu durumda branch her halikarda silinir. Bu kullanimda birden fazla branch isimleri bosluklarla eklenerek yazilirsa hepsi birden silinir.
+
 
 ### git add <file_name> 
 bir dosyadaki degisiklikleri stage alanina ekler. Eger dosya adi yerine . koyulursa gitin takip ettigi tum dosyalardaki degisiklikleri stage alanina ekler.
@@ -128,6 +158,9 @@ NOT: Eger bir branch silindiyse ve `git reflog` ile gelen listede gidilmek isten
 * Yeni bir branch olusturulup ona gecilir. `git switch -c <new_branch_name>` 
 * Sonra istenirse master branch uzerine gecilip bu yeni branch merge edilebilir.
 
+**NOT:** Local Tracking Branch ve Remote Tracking Branch birbirleriyle ayni isimlerde olmak zorundadir. Local Tracking Branch uzerinden godrudan Remote Tracking Branch'e push, pull yapilabilir. Branch izerindeysek `git push` ve `git pull` dogrudan calisir. 
+* Eger bir bracnh'in tracking brach'i yoksa pull ve push kullanirken remote uzerindeki hangi brancha gonderilecegini /cekilecegini belirterek yazmak gerekir.
+`git push origin new-feature-branch` gibi.
  
 ## MERGE
 
@@ -237,3 +270,10 @@ Eger default upstream branchdisindaki bir brancha push edilecekse (default olara
 
 ### git pull
 Remote veriyi local repoya ceker.
+
+
+### git clone
+remote repoyu local e kopyalamaya yarar
+
+## git branch --delete --remotes origin/<branch_name> 
+remote uzerindeki ismi verilen branchi silmeye yarar, localde -D ile siliyorduk, remote olunca -D kullanilmaz.
