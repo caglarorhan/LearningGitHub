@@ -77,6 +77,10 @@ Ustunde bulunulan branch'tan baska bir brancha gecmek icin kullanilir.
 
 Eger `git checkout -b <branch_name>` seklinde kullanilirsa verilen isimle yeni bir branch olusturulur ve ona gecilir.
 
+***NOT:*** branch isimleri verilirken branch turunun ne oldugunu belirtererek verirsek takip etmesi kolay olacaktir.
+
+`git checkout -b feat/cart-logic` gibi. Burada branch bir feature branch ve adi cart-logic. Bu bir kural degil name convention dur. Best practice olarak dusunulebilir.
+
 ### git checkout <commit_hash_idsi>
 id'si (git log ile gorulebilir) verilen commit'in brachindan bagimsiz olarak uzerine gidilir. Bu duruma **detached head state** denilir.
 Baska sebeplerle de bu duruma dusulebilir.  
