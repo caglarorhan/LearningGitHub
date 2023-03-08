@@ -49,6 +49,9 @@ Sadece remote branchlar listlenir
 ### git branch -vv
 local branchlar, en son commitleri ve tracking edilenlerin remote uzerinde eslestikleri branchlar listelenir 
 
+### git branch -m <old_branch_name> <new_branch_name>
+bir branchin ismini degistirmek icin kullanilir. Ilk isim halihazirdaki branch adi ikincisi ise brancha yeni verilecek isimdir.
+
 ## git branch --track <branch_name> origin/<branch_name>
 remote ile ayni isimde local tracking branch olusturmaya yarar. Ayni isimde olmalari zorunludur.
 
@@ -275,5 +278,13 @@ Remote veriyi local repoya ceker.
 ### git clone
 remote repoyu local e kopyalamaya yarar
 
-## git branch --delete --remotes origin/<branch_name> 
-remote uzerindeki ismi verilen branchi silmeye yarar, localde -D ile siliyorduk, remote olunca -D kullanilmaz.
+### git branch --delete --remotes origin/<tracking_branch_name> 
+remote uzerindeki ismi verilen tracking branchi silmeye yarar, localde -D ile siliyorduk, remote olunca -D kullanilmaz.
+
+### git push origin --delete <branch_name>
+remote uzerindeki ismi verilen nromal branchi silmeye yarar. Remote tracking branch silme ile aradaki farka dikkat!
+
+**NOT:** Remote branch silinirse ona ait remote tracking brach da kendiliginden silinir!
+
+### git push --force origin master
+Localde bir head geriye dusulduyse (reset ile vb.) bunu remote a kabul ettirmek icin --force kullanmak zorundayiz.
